@@ -8,6 +8,7 @@ import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js' // 控制相機
 import Stats from 'three/addons/libs/stats.module.js' // 顯示畫面FPS等數據
+import { GUI } from 'dat.gui' // 控制畫面參數
 
 const scene = new THREE.Scene()
 
@@ -36,6 +37,18 @@ scene.add(cube)
 const stats = new Stats()
 // stats.showPanel(1) // 0: fps, 1: ms, 2: mb, 3+: custom 可以選擇預設顯示的數據
 document.body.appendChild(stats.dom)
+
+
+const gui = new GUI()
+const cubeFolder = gui.addFolder('Cube') // 控制方塊的旋轉
+cubeFolder.add(cube.rotation, 'x', 0, Math.PI * 2)
+cubeFolder.add(cube.rotation, 'y', 0, Math.PI * 2)
+cubeFolder.add(cube.rotation, 'z', 0, Math.PI * 2)
+cubeFolder.open() // 預設cubeFolder展開
+
+const cameraFolder = gui.addFolder('Camera') // 控制相機的位置, 預設位置參考 camera.position.z
+cameraFolder.add(camera.position, 'z', 0, 10) 
+cameraFolder.open() // 預設cameraFolder展開
 
 function animate() {
   requestAnimationFrame(animate)
